@@ -19,5 +19,14 @@ que herde de **br.com.spiderbot.wizard.pages.Page**.
 Em **br.com.spiderbot.wizard.Wizard**, o método **initialize** pode ser utilizado para carregar
 as as páginas. A ordem de apresentação será definida pela ordem de registro delas.
 
-## Navegação
+## O Wizard
 
+![Wizard](./images/wizard.png "Formulári principal do aplicativo Wizard.")
+
+O título ([Title]) será atualizado em cada navegação com informações da página corrente.
+
+O campo de estado de navegação [status] apresentará informações sobre operações realizada na página corrente, além de alguns íncones ao lado esquerdo indicando a navegação entre as páginas.
+
+Os botões serão desabilitados quando não for possível executar alguma operação. O botão Excutar estará disponível apenas na última página.
+
+A área destacada na imagem é onde as páginas de navegação serão apresentadas. O componente base é um StackPane. Procure criar as páginas de navegação do Wizard com as mesmas dimensões deste componente (content).
