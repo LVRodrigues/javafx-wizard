@@ -13,7 +13,13 @@
         <maven.compiler.target>17</maven.compiler.target>
         <java.release>17</java.release>
         <javafx.version>18-ea+8</javafx.version>
+        <fontawesomefx.version>9.1.2</fontawesomefx.version>
+        <fontawesome.version>4.7.0</fontawesome.version>
+        <octicons.version>4.3.0</octicons.version>
+        <materialicons.version>2.2.0</materialicons.version>
+        <icons525.version>4.2.0</icons525.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -24,6 +30,40 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
+        </dependency>
+        <!-- 
+            Incomporando os ícones baseados em fontes apenas para deixar disponíveis. 
+            O aplicativo faz uso apenas do pacote fontawesome.
+        -->
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-commons</artifactId>
+            <version>${fontawesomefx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-controls</artifactId>
+            <version>${fontawesomefx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-fontawesome</artifactId>
+            <version>${fontawesome.version}-${fontawesomefx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-octicons</artifactId>
+            <version>${octicons.version}-${fontawesomefx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-materialicons</artifactId>
+            <version>${materialicons.version}-${fontawesomefx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-icons525</artifactId>
+            <version>${icons525.version}-${fontawesomefx.version}</version>
         </dependency>
     </dependencies>
 

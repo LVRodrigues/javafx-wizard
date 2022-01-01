@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.spiderbot.wizard.Wizard">
+   <bottom>
+      <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 2; -fx-background-color: lightgray; -fx-border-style: solid hidden hidden hidden;" BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane fx:id="indicators" alignment="CENTER_LEFT" columnHalignment="CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <Separator orientation="VERTICAL" prefHeight="33.0" />
+                  <Label fx:id="status" text="[status]" />
+               </children>
+            </FlowPane>
+            <ButtonBar buttonMinWidth="100.0">
+              <buttons>
+                <Button fx:id="previous" mnemonicParsing="false" text="Voltar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_CIRCLE_LEFT" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="next" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Avançar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_CIRCLE_RIGHT" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="execute" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Executar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CHECK_CIRCLE" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="cancel" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Cancelar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" />
+                     </graphic>
+                  </Button>
+              </buttons>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </ButtonBar>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" style="-fx-background-color: orange; -fx-border-color: gray; -fx-border-width: 4; -fx-border-style: solid hidden solid hidden;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="title" style="-fx-font-weight: bolder;" text="[Page Title]">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="10.0" top="10.0" />
+         </opaqueInsets>
+      </HBox>
+   </top>
+   <left>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_RIGHT">
+         <image>
+            <Image url="@../../../../META-INF/spiderbot.png" />
+         </image>
+      </ImageView>
+   </left>
+   <center>
+      <StackPane fx:id="content" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </StackPane>
+   </center>
+</BorderPane>
