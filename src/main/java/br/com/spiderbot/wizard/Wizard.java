@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 /**
 * Classe de Gerenciamento do Wizard.
@@ -103,7 +105,7 @@ public class Wizard {
             introduction.setLocation(Introduction.class.getResource("introduction.fxml"));
             introduction.load();
 
-            content.getChildren().add(introduction.getRoot());
+            addPage(introduction);
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
@@ -112,5 +114,22 @@ public class Wizard {
             alert.showAndWait();
             System.exit(2);
         }
+    }
+
+    /**
+     * Coloca a página de navegação na fila de apresentação.
+     * <p>
+     * Para cada pagína, é criado também um ícone de representação para
+     * indicar o ponto de navegação do aplicativo.
+     * 
+     * @param page Página do Wizard.
+     */
+    private void addPage(FXMLLoader page) {
+        pages.add(page);
+
+        Circle circle = new Circle(5);
+        circle.setFill(Color.BLACK);
+        circle.setOpacity(INDICATOR_CURRENT);
+        indicators.getChildren().add(0, circle);
     }
 }

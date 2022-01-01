@@ -18,11 +18,14 @@
    <bottom>
       <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 2; -fx-background-color: lightgray; -fx-border-style: solid hidden hidden hidden;" BorderPane.alignment="CENTER">
          <children>
-            <FlowPane fx:id="indicators" alignment="CENTER_LEFT" columnHalignment="CENTER" HBox.hgrow="ALWAYS">
+            <FlowPane fx:id="indicators" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="5.0" HBox.hgrow="ALWAYS">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="33.0" />
                   <Label fx:id="status" text="[status]" />
                </children>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </FlowPane>
             <ButtonBar buttonMinWidth="100.0">
               <buttons>
