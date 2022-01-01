@@ -4,15 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="431.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.spiderbot.wizard.pages.Introduction">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="585.0" spacing="5.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.spiderbot.wizard.pages.Introduction">
    <children>
       <Label text="Apresento aqui o tutorial de Java FX." />
       <Label text="Aplicativo exemplo de como gerar um Wizard." />
       <Label text="Esta é a página de introdução." />
       <AnchorPane VBox.vgrow="ALWAYS">
          <children>
-            <Label text="Desenvolvido por Luciano Vieira Rodrigues" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <Label text="Desenvolvido por Luciano Vieira Rodrigues." AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>

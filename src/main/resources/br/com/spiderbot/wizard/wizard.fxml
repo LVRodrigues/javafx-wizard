@@ -79,7 +79,7 @@
       </ImageView>
    </left>
    <center>
-      <StackPane fx:id="content" BorderPane.alignment="CENTER">
+      <StackPane fx:id="content">
          <BorderPane.margin>
             <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
          </BorderPane.margin>
