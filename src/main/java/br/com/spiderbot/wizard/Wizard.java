@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.spiderbot.wizard.pages.Introduction;
+import br.com.spiderbot.wizard.pages.Parameters;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -104,8 +105,12 @@ public class Wizard {
             FXMLLoader introduction = new FXMLLoader();
             introduction.setLocation(Introduction.class.getResource("introduction.fxml"));
             introduction.load();
-
             addPage(introduction);
+
+            FXMLLoader parameters = new FXMLLoader();
+            parameters.setLocation(Parameters.class.getResource("parameters.fxml"));
+            parameters.load();
+            addPage(parameters);
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
@@ -129,7 +134,7 @@ public class Wizard {
 
         Circle circle = new Circle(5);
         circle.setFill(Color.BLACK);
-        circle.setOpacity(INDICATOR_CURRENT);
+        circle.setOpacity(INDICATOR_OTHERS);
         indicators.getChildren().add(0, circle);
     }
 }

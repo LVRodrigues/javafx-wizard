@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.spiderbot.wizard.pages.Parameters">
+   <children>
+      <Label layoutX="4.0" layoutY="10.0" text="Nome:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
+      <Label layoutY="39.0" text="Contador:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0" />
+      <TextField fx:id="fieldName" layoutX="71.0" layoutY="6.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="6.0" />
+      <Spinner fx:id="fieldCounter" layoutX="71.0" layoutY="35.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0" />
+   </children>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
+</AnchorPane>

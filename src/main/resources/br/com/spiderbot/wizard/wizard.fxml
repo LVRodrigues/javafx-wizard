@@ -16,7 +16,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.spiderbot.wizard.Wizard">
    <bottom>
-      <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 2; -fx-background-color: lightgray; -fx-border-style: solid hidden hidden hidden;" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-border-color: gray; -fx-border-width: 2; -fx-border-style: solid hidden hidden hidden;" BorderPane.alignment="CENTER">
          <children>
             <FlowPane fx:id="indicators" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="5.0" HBox.hgrow="ALWAYS">
                <children>
@@ -58,7 +58,7 @@
       </HBox>
    </bottom>
    <top>
-      <HBox alignment="CENTER" style="-fx-background-color: orange; -fx-border-color: gray; -fx-border-width: 4; -fx-border-style: solid hidden solid hidden;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" style="-fx-background-color: orange; -fx-border-color: gray; -fx-border-width: 2; -fx-border-style: hidden hidden solid hidden;" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="title" style="-fx-font-weight: bolder;" text="[Title]">
                <font>
