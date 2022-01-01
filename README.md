@@ -11,3 +11,13 @@ Esse exemplo utiliza:
 
 Há um esforço para desenvolver as classes principais de gerenciamento do Wizard e das páginas de navegação.
 
+## Páginas
+
+As páginas devem ser arquivos de leioute Java FX (*.fxml), que possuam uma classe de controle que
+que herde de **br.com.spiderbot.wizard.pages.Page**.
+
+Em **br.com.spiderbot.wizard.Wizard**, o método **initialize** pode ser utilizado para carregar
+as as páginas. A ordem de apresentação será definida pela ordem de registro delas.
+
+## Navegação
+

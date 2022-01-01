@@ -1,8 +1,16 @@
 package br.com.spiderbot.wizard;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.spiderbot.wizard.pages.Introduction;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 
@@ -75,4 +83,34 @@ public class Wizard {
      */
     @FXML
     private StackPane content;
+
+    /**
+     * Lista de páginas para gerenciar.
+     */
+    private List<FXMLLoader> pages;
+
+    /**
+     * Inicialização da camada Java FX.
+     * <p>
+     * Utilize este método para carregar a lista de páginas do Wizard.
+     */
+    @FXML
+    public void initialize() {
+        pages = new ArrayList<>();
+
+        try {
+            FXMLLoader introduction = new FXMLLoader();
+            introduction.setLocation(Introduction.class.getResource("introduction.fxml"));
+            introduction.load();
+
+            content.getChildren().add(introduction.getRoot());
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Erro ao carregar as páginas do aplicativo.");
+            alert.setContentText(e.getLocalizedMessage());
+            alert.showAndWait();
+            System.exit(2);
+        }
+    }
 }

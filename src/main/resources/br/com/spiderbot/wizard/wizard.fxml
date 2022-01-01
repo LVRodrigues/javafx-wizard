@@ -57,7 +57,7 @@
    <top>
       <HBox alignment="CENTER" style="-fx-background-color: orange; -fx-border-color: gray; -fx-border-width: 4; -fx-border-style: solid hidden solid hidden;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="title" style="-fx-font-weight: bolder;" text="[Page Title]">
+            <Label fx:id="title" style="-fx-font-weight: bolder;" text="[Title]">
                <font>
                   <Font size="18.0" />
                </font>
