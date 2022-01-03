@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.spiderbot.wizard.pages.Introduction;
 import br.com.spiderbot.wizard.pages.Parameters;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -136,5 +137,43 @@ public class Wizard {
         circle.setFill(Color.BLACK);
         circle.setOpacity(INDICATOR_OTHERS);
         indicators.getChildren().add(0, circle);
+    }
+
+    /**
+     * Evento de navegação para a página anterior.
+     * @param event Informações da origem do evento.
+     */
+    @FXML
+    public void previousAction(ActionEvent event) {
+
+    }
+
+    /**
+     * Evento de navegação para a próxima página.
+     * @param event Informações da origem do evento.
+     */
+    @FXML
+    public void nextAction(ActionEvent event) {
+
+    }
+
+    /**
+     * Evento de execução do processo específico do Wizard.
+     * @param event Informações da origem do evento.
+     */
+    @FXML
+    public void executeAction(ActionEvent event) {
+
+    }
+
+    /**
+     * Cancela a execução de processos do Wizard.
+     * <p>
+     * Também finaliza o aplicativo.
+     * @param event Informações da origem do evento.
+     */
+    @FXML
+    public void cancelAction(ActionEvent event) {
+
     }
 }

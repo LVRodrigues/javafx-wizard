@@ -29,22 +29,22 @@
             </FlowPane>
             <ButtonBar buttonMinWidth="100.0">
               <buttons>
-                <Button fx:id="previous" mnemonicParsing="false" text="Voltar">
+                <Button fx:id="previous" mnemonicParsing="false" onAction="#previousAction" text="Voltar">
                      <graphic>
                         <FontAwesomeIconView glyphName="ARROW_CIRCLE_LEFT" />
                      </graphic>
                   </Button>
-                  <Button fx:id="next" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Avançar">
+                  <Button fx:id="next" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" onAction="#nextAction" text="Avançar">
                      <graphic>
                         <FontAwesomeIconView glyphName="ARROW_CIRCLE_RIGHT" />
                      </graphic>
                   </Button>
-                  <Button fx:id="execute" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Executar">
+                  <Button fx:id="execute" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" onAction="#executeAction" text="Executar">
                      <graphic>
                         <FontAwesomeIconView glyphName="CHECK_CIRCLE" />
                      </graphic>
                   </Button>
-                  <Button fx:id="cancel" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" text="Cancelar">
+                  <Button fx:id="cancel" layoutX="125.0" layoutY="44.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancelar">
                      <graphic>
                         <FontAwesomeIconView glyphName="CLOSE" />
                      </graphic>
