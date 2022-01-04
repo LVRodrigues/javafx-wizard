@@ -2,13 +2,18 @@ package br.com.spiderbot.wizard;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.spiderbot.wizard.pages.Introduction;
+import br.com.spiderbot.wizard.pages.Page;
 import br.com.spiderbot.wizard.pages.Parameters;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,7 +33,7 @@ import javafx.scene.shape.Circle;
 * @author $$Author$$
 * @version $$Revision$$ - $$Date$$
 */
-public class Wizard {
+public class Wizard implements Runnable {
 
     /**
      * Porcentagem de visibilidade do indicador da página corrente (100%).
@@ -74,7 +79,7 @@ public class Wizard {
      * Informa o estado de operação da página corrente.
      */
     @FXML
-    private Label status;
+    private Label labelStatus;
 
     /**
      * Título da página corrente.
@@ -92,6 +97,26 @@ public class Wizard {
      * Lista de páginas para gerenciar.
      */
     private List<FXMLLoader> pages;
+
+    /**
+     * Índice da página corrente.
+     */
+    private int current;
+
+    /**
+     * Controlador da página corrente.
+     */
+    private Page page;
+
+    /**
+     * Processo de monitoramento da navegação.
+     */
+    private Thread navigator;
+
+    /**
+     * Estado de operação do Wizard.
+     */
+    private Status status;
 
     /**
      * Inicialização da camada Java FX.
@@ -112,6 +137,21 @@ public class Wizard {
             parameters.setLocation(Parameters.class.getResource("parameters.fxml"));
             parameters.load();
             addPage(parameters);
+
+            // Duplicando páginas apenas para gerar volume:
+            addPage(introduction);
+            addPage(introduction);
+            addPage(introduction);
+
+            // Selecionando a página corrente:
+            current = 0;
+            page    = introduction.getController();
+            updatePage();
+
+            // Inicializando o processo em segundo plano para monitoramento de navegação:
+            status = Status.IDLE;
+            navigator = new Thread(this);
+            navigator.start();
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
@@ -131,12 +171,33 @@ public class Wizard {
      * @param page Página do Wizard.
      */
     private void addPage(FXMLLoader page) {
+        // Armazena a página para exibição.
         pages.add(page);
 
+        // Adiciona um indicador de página sempre como primeiro componente.
         Circle circle = new Circle(5);
         circle.setFill(Color.BLACK);
         circle.setOpacity(INDICATOR_OTHERS);
         indicators.getChildren().add(0, circle);
+    }
+
+    /**
+     * Apresenta a página selecionada.
+     */
+    private void updatePage() {
+        Scene scene = content.getScene();
+        if (scene != null) {
+            scene.setCursor(Cursor.WAIT);
+        }
+        try {
+            content.getChildren().clear();
+            FXMLLoader page = pages.get(current);
+            content.getChildren().add(page.getRoot());
+        } finally {
+            if (scene != null) {
+                scene.setCursor(Cursor.DEFAULT);
+            }
+        }
     }
 
     /**
@@ -174,6 +235,38 @@ public class Wizard {
      */
     @FXML
     public void cancelAction(ActionEvent event) {
+        Platform.exit();
+    }
 
+    @Override
+    public void run() {
+        while (status != Status.CANCELED || status != Status.FINISHED) {
+            try {
+                // Indicador de página de navegação:
+                indicators.getChildren().forEach(i -> {
+                    if (i instanceof Circle) {
+                        // Todos os indicadores com 20% de visibilidade:
+                        i.setOpacity(INDICATOR_OTHERS);
+                    }
+                });
+                // O indicador da página corrente com 100% de visibilidade:
+                indicators.getChildren().get(current).setOpacity(INDICATOR_CURRENT);
+
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+    }
+
+    /**
+     * Solicita a finalização do processo de monitoramento 
+     * da navegação.
+     * @throws InterruptedException
+     */
+    public void shutdown() throws InterruptedException {
+        status = Status.FINISHED;
+        navigator.join();
     }
 }

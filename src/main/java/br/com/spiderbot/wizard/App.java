@@ -30,6 +30,20 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Java FX Wizard Example");
         stage.setResizable(false);
+
+        stage.setOnHidden(hidden -> {
+            try {
+                Wizard wizard = loader.getController();
+                wizard.shutdown();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        stage.setOnCloseRequest(close -> {
+            Wizard wizard = loader.getController();
+        });
+
         stage.show();
     }
 

@@ -21,7 +21,7 @@
             <FlowPane fx:id="indicators" alignment="CENTER_LEFT" columnHalignment="CENTER" hgap="5.0" HBox.hgrow="ALWAYS">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="33.0" />
-                  <Label fx:id="status" text="[status]" />
+                  <Label fx:id="labelStatus" text="[status]" />
                </children>
                <HBox.margin>
                   <Insets left="5.0" />
