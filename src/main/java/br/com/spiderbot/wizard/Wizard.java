@@ -2,22 +2,26 @@ package br.com.spiderbot.wizard;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import br.com.spiderbot.wizard.pages.Introduction;
 import br.com.spiderbot.wizard.pages.Page;
 import br.com.spiderbot.wizard.pages.Parameters;
 import javafx.application.Platform;
+import javafx.beans.binding.When;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -33,7 +37,7 @@ import javafx.scene.shape.Circle;
 * @author $$Author$$
 * @version $$Revision$$ - $$Date$$
 */
-public class Wizard implements Runnable {
+public class Wizard {
 
     /**
      * Porcentagem de visibilidade do indicador da página corrente (100%).
@@ -101,7 +105,7 @@ public class Wizard implements Runnable {
     /**
      * Índice da página corrente.
      */
-    private int current;
+    private IntegerProperty current = new SimpleIntegerProperty(0);
 
     /**
      * Controlador da página corrente.
@@ -109,14 +113,9 @@ public class Wizard implements Runnable {
     private Page page;
 
     /**
-     * Processo de monitoramento da navegação.
-     */
-    private Thread navigator;
-
-    /**
      * Estado de operação do Wizard.
      */
-    private Status status;
+    private ObjectProperty<Status> status = new SimpleObjectProperty<Status>(Status.IDLE);
 
     /**
      * Inicialização da camada Java FX.
@@ -144,14 +143,12 @@ public class Wizard implements Runnable {
             addPage(introduction);
 
             // Selecionando a página corrente:
-            current = 0;
+            current.setValue(1);
             page    = introduction.getController();
             updatePage();
 
             // Inicializando o processo em segundo plano para monitoramento de navegação:
-            status = Status.IDLE;
-            navigator = new Thread(this);
-            navigator.start();
+            labelStatus.textProperty().bind(status.asString());
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
@@ -171,14 +168,19 @@ public class Wizard implements Runnable {
      * @param page Página do Wizard.
      */
     private void addPage(FXMLLoader page) {
+        int index = current.get();
         // Armazena a página para exibição.
-        pages.add(page);
-
+        pages.add(index, page);
         // Adiciona um indicador de página sempre como primeiro componente.
         Circle circle = new Circle(5);
         circle.setFill(Color.BLACK);
-        circle.setOpacity(INDICATOR_OTHERS);
-        indicators.getChildren().add(0, circle);
+        circle.opacityProperty().bind(
+            new When(current.isEqualTo(index))
+                .then(INDICATOR_CURRENT)
+                .otherwise(INDICATOR_OTHERS));
+        indicators.getChildren().add(index, circle);
+        // Preparando-se para a próxima página:
+        current.set(++index);
     }
 
     /**
@@ -191,7 +193,7 @@ public class Wizard implements Runnable {
         }
         try {
             content.getChildren().clear();
-            FXMLLoader page = pages.get(current);
+            FXMLLoader page = pages.get(current.get());
             content.getChildren().add(page.getRoot());
         } finally {
             if (scene != null) {
@@ -236,37 +238,5 @@ public class Wizard implements Runnable {
     @FXML
     public void cancelAction(ActionEvent event) {
         Platform.exit();
-    }
-
-    @Override
-    public void run() {
-        while (status != Status.CANCELED || status != Status.FINISHED) {
-            try {
-                // Indicador de página de navegação:
-                indicators.getChildren().forEach(i -> {
-                    if (i instanceof Circle) {
-                        // Todos os indicadores com 20% de visibilidade:
-                        i.setOpacity(INDICATOR_OTHERS);
-                    }
-                });
-                // O indicador da página corrente com 100% de visibilidade:
-                indicators.getChildren().get(current).setOpacity(INDICATOR_CURRENT);
-
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-        }
-    }
-
-    /**
-     * Solicita a finalização do processo de monitoramento 
-     * da navegação.
-     * @throws InterruptedException
-     */
-    public void shutdown() throws InterruptedException {
-        status = Status.FINISHED;
-        navigator.join();
     }
 }
