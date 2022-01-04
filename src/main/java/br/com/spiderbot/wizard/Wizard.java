@@ -168,7 +168,7 @@ public class Wizard {
      * @param page Página do Wizard.
      */
     private void addPage(FXMLLoader page) {
-        int index = current.get();
+        int index = pages.size();
         // Armazena a página para exibição.
         pages.add(index, page);
         // Adiciona um indicador de página sempre como primeiro componente.
@@ -179,8 +179,6 @@ public class Wizard {
                 .then(INDICATOR_CURRENT)
                 .otherwise(INDICATOR_OTHERS));
         indicators.getChildren().add(index, circle);
-        // Preparando-se para a próxima página:
-        current.set(++index);
     }
 
     /**
@@ -208,7 +206,7 @@ public class Wizard {
      */
     @FXML
     public void previousAction(ActionEvent event) {
-
+        current.set(current.get() - 1);
     }
 
     /**
@@ -217,7 +215,7 @@ public class Wizard {
      */
     @FXML
     public void nextAction(ActionEvent event) {
-
+        current.set(current.get() + 1);
     }
 
     /**
