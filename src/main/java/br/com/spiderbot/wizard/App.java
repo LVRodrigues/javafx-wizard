@@ -5,6 +5,8 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
@@ -26,6 +28,23 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Wizard.class.getResource("wizard.fxml"));
     
+        stage.setOnHidden(h -> {
+            Wizard wizard = loader.getController();
+            wizard.shutdown();
+        });
+
+        stage.setOnCloseRequest(c -> {
+            Wizard wizard = loader.getController();
+            if (wizard.getStatus() == Status.EXECUTING || wizard.getStatus() == Status.NAVIGATING) {
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Fecar");
+                alert.setHeaderText("Aplicativo processando informação!");
+                alert.setContentText("Fechamento solicitado não pode ser executado.");
+                alert.showAndWait();
+                c.consume();
+            }
+        });
+
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.setTitle("Java FX Wizard Example");

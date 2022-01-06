@@ -37,7 +37,7 @@ import javafx.scene.shape.Circle;
 * @author $$Author$$
 * @version $$Revision$$ - $$Date$$
 */
-public class Wizard {
+public class Wizard implements Runnable {
 
     /**
      * Porcentagem de visibilidade do indicador da página corrente (100%).
@@ -118,6 +118,17 @@ public class Wizard {
     private ObjectProperty<Status> status = new SimpleObjectProperty<Status>(Status.IDLE);
 
     /**
+     * Processo em segundo plano para monitoramento das páginas e gerenciamento 
+     * da navegação.
+     */
+    private Thread monitor;
+
+    /**
+     * Controle de execução do processo em segundo plano.
+     */
+    private boolean monitoring;
+
+    /**
      * Inicialização da camada Java FX.
      * <p>
      * Utilize este método para carregar a lista de páginas do Wizard.
@@ -143,12 +154,16 @@ public class Wizard {
             addPage(introduction);
 
             // Selecionando a página corrente:
-            current.setValue(1);
             page    = introduction.getController();
             updatePage();
 
-            // Inicializando o processo em segundo plano para monitoramento de navegação:
+            // Ligando propriedades:
             labelStatus.textProperty().bind(status.asString());
+
+            // Inicializando o monitoramento em segundo plano.
+            monitoring  = true;
+            monitor     = new Thread(this);
+            monitor.start();
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Erro");
@@ -224,7 +239,7 @@ public class Wizard {
      */
     @FXML
     public void executeAction(ActionEvent event) {
-
+        status.set(Status.EXECUTING);
     }
 
     /**
@@ -235,6 +250,62 @@ public class Wizard {
      */
     @FXML
     public void cancelAction(ActionEvent event) {
+        shutdown();
         Platform.exit();
+    }
+
+    /**
+     * Processo paralelo, executado em segundo plano.
+     * <p>
+     * Controlará os estados dos botões de navegação e operação do aplicativo.
+     */
+    @Override
+    public void run() {
+        while (monitoring) {
+            previous.setDisable(
+                page == null
+                ||
+                current.get() == 0
+                ||
+                !page.canDoPrevious()
+                ||
+                !status.get().equals(Status.IDLE)
+            );
+
+            next.setDisable(
+                page == null
+                ||
+                current.get() == pages.size() - 1
+                ||
+                !page.canDoNext()
+                ||
+                !status.get().equals(Status.IDLE)
+            );
+
+            Thread.yield();
+        }
+    }
+
+    /**
+     * Método para ser executado no fechamento do aplicativo,
+     * para encerrar o processo em segundo plano.
+     */
+    public void shutdown() {
+        monitoring = false;
+        try {
+            monitor.join();
+        } catch (InterruptedException e) {
+            // Já está encerrando... não precisa tratar a exceção...
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Expõe o estado de operação do aplicativo para o controle
+     * de fechamento.
+     * @return Status
+     */
+    public Status getStatus() {
+        return status.get();
     }
 }
