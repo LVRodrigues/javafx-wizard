@@ -282,6 +282,14 @@ public class Wizard implements Runnable {
                 !status.get().equals(Status.IDLE)
             );
 
+            execute.setDisable(
+                page == null
+                ||
+                current.get() != pages.size() - 1
+                ||
+                !status.get().equals(Status.IDLE)
+            );
+
             Thread.yield();
         }
     }
