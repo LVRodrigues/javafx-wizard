@@ -69,7 +69,7 @@ public abstract class Page {
      * Esse evento salva as informações coletadas no Wizard em um arquivo
      * XML.
      */
-    public void onBeforeHide() {
+    public void onHide() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -107,7 +107,7 @@ public abstract class Page {
      * Esse evento carrega as informações salvas pelo Wizard em um arquivo
      * XML.
      */
-    public void onBeforeShow() {
+    public void onShow() {
         File file = getFile();
         if (!file.exists()) {
             return;
@@ -139,14 +139,6 @@ public abstract class Page {
     }
 
     /**
-     * Evento disparado ao apresentar a página no Wizard.
-     * <p>
-     * Utilize este evento para configurar a página com as 
-     * informações coletadas pelo Wizard.
-     */
-    public abstract void onShow();
-
-        /**
      * Recupera o conjunto de informações compartilhadas entre as páginas.
      * @return Conjunto de informações no padrão chave e valor.
      */

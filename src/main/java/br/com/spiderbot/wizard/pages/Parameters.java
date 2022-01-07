@@ -57,7 +57,15 @@ public class Parameters extends Page {
     }
 
     @Override
+    public void onHide() {
+        datas().put(PARAM_NAME, fieldName.getText());
+        datas().put(PARAM_COUNTER, fieldCounter.getValue().toString());
+        super.onHide();
+    }
+
+    @Override
     public void onShow() {
+        super.onShow();
         fieldName.setText(datas().getOrDefault(PARAM_NAME, PARAM_NAME_DEFAULT));
         fieldCounter.getValueFactory().setValue(Integer.valueOf(datas().getOrDefault(PARAM_COUNTER, PARAM_COUNTER_DEFAULT.toString())));
     }

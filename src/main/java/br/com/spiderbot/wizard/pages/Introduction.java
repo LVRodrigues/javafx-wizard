@@ -18,8 +18,4 @@ public class Introduction extends Page {
     public String getTitle() {
         return "Introdução";
     }
-
-    @Override
-    public void onShow() {
-    }
 }

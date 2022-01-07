@@ -13,6 +13,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -221,7 +223,8 @@ public class Wizard implements Runnable {
      */
     @FXML
     public void previousAction(ActionEvent event) {
-        current.set(current.get() - 1);
+        final int navigate = current.get() - 1;
+        navigateTo(event, navigate);
     }
 
     /**
@@ -230,7 +233,67 @@ public class Wizard implements Runnable {
      */
     @FXML
     public void nextAction(ActionEvent event) {
-        current.set(current.get() + 1);
+        final int navigate = current.get() + 1;
+        navigateTo(event, navigate);
+    }
+
+    /**
+     * Executa a navegação para uma nova página.
+     * @param event Evento de origem da navegação.
+     * @param navigate Índice da próxima página.
+     */
+    private void navigateTo(ActionEvent event, final int navigate) {
+        Scene scene = content.getScene();
+        Service<Boolean> service = new Service<Boolean>() {
+            @Override
+            protected Task<Boolean> createTask() {
+                return new Task<Boolean>() {
+                    @Override
+                    protected Boolean call() throws Exception {
+                        // Se é permitido navegar...
+                        if (page != null && page.canDoNext()) {
+                            // Salva as configurações
+                            page.onHide();
+                            // Avança para a próxima página:
+                            current.set(navigate);
+                            // Carrega o novo controlador:
+                            page = pages.get(current.get()).getController();
+                            // Carregar os parâmetros:
+                            page.onShow();
+                        }
+                        return Boolean.TRUE;
+                    }
+                };
+            }
+        };
+
+        // Altera o cursor do mouse ao iniciar o processo em segundo plano.
+        service.setOnRunning(r -> {
+            scene.setCursor(Cursor.WAIT);
+            status.set(Status.NAVIGATING);
+        });
+
+        // Apresenta uma mensagem em caso de falhas.
+        service.setOnFailed(f -> {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(((Button) event.getSource()).getText());
+            alert.setContentText(service.getException().getLocalizedMessage());
+            alert.showAndWait();
+            service.cancel();
+            scene.setCursor(Cursor.DEFAULT);
+            status.set(Status.IDLE);
+        });   
+
+        // Restaura o estado de espera por uma ação do usuário.
+        service.setOnSucceeded(s -> {
+            updatePage();
+            scene.setCursor(Cursor.DEFAULT);
+            status.set(Status.IDLE);
+        });
+
+        // Inicia o processo em segundo plano para troca de página.
+        service.start();
     }
 
     /**
