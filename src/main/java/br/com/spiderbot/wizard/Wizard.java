@@ -157,6 +157,9 @@ public class Wizard implements Runnable {
 
             // Selecionando a página corrente:
             page    = introduction.getController();
+            // Se desejar que as configurações sejam persistentes, carrege-as aqui...
+            page.onShow();
+            // Apresentando a primeira página:
             updatePage();
 
             // Ligando propriedades:
@@ -207,9 +210,12 @@ public class Wizard implements Runnable {
             scene.setCursor(Cursor.WAIT);
         }
         try {
+            // Alterando o conteúdo de apresentação (página).
             content.getChildren().clear();
-            FXMLLoader page = pages.get(current.get());
-            content.getChildren().add(page.getRoot());
+            FXMLLoader loader = pages.get(current.get());
+            content.getChildren().add(loader.getRoot());
+            // Alterando o título da página:
+            title.setText(page.getTitle());
         } finally {
             if (scene != null) {
                 scene.setCursor(Cursor.DEFAULT);
@@ -251,7 +257,7 @@ public class Wizard implements Runnable {
                     @Override
                     protected Boolean call() throws Exception {
                         // Se é permitido navegar...
-                        if (page != null && page.canDoNext()) {
+                        if (page != null) {
                             // Salva as configurações
                             page.onHide();
                             // Avança para a próxima página:
