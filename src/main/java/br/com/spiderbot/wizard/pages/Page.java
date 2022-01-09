@@ -142,7 +142,7 @@ public abstract class Page {
      * Recupera o conjunto de informações compartilhadas entre as páginas.
      * @return Conjunto de informações no padrão chave e valor.
      */
-    protected Map<String, String> datas() {
+    public Map<String, String> datas() {
         return datas;
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.spiderbot.wizard.pages.Introduction;
 import br.com.spiderbot.wizard.pages.Page;
 import br.com.spiderbot.wizard.pages.Parameters;
+import br.com.spiderbot.wizard.pages.Processing;
 import javafx.application.Platform;
 import javafx.beans.binding.When;
 import javafx.beans.property.IntegerProperty;
@@ -117,7 +118,7 @@ public class Wizard implements Runnable {
     /**
      * Estado de operação do Wizard.
      */
-    private ObjectProperty<Status> status = new SimpleObjectProperty<Status>(Status.IDLE);
+    private ObjectProperty<Status> status = new SimpleObjectProperty<>(Status.IDLE);
 
     /**
      * Processo em segundo plano para monitoramento das páginas e gerenciamento 
@@ -150,10 +151,10 @@ public class Wizard implements Runnable {
             parameters.load();
             addPage(parameters);
 
-            // Duplicando páginas apenas para gerar volume:
-            addPage(introduction);
-            addPage(introduction);
-            addPage(introduction);
+            FXMLLoader processing = new FXMLLoader();
+            processing.setLocation(Processing.class.getResource("processing.fxml"));
+            processing.load();
+            addPage(processing);
 
             // Selecionando a página corrente:
             page    = introduction.getController();
@@ -308,7 +309,71 @@ public class Wizard implements Runnable {
      */
     @FXML
     public void executeAction(ActionEvent event) {
-        status.set(Status.EXECUTING);
+        if (!(page instanceof Processing)) {
+            throw new ClassCastException("A página final não está correta. Não é possível executar.");
+        }
+        Scene scene = content.getScene();
+        Processing processing = (Processing) page;
+        Service<Boolean> service = new Service<Boolean>() {
+            @Override
+            protected Task<Boolean> createTask() {
+                return new Task<Boolean>() {
+                    @Override
+                    protected Boolean call() throws Exception {
+                        int counter     = Integer.parseInt(processing.datas().get(Constants.PARAM_COUNTER));
+                        double progress = 0;
+                        for (int i = 1; i <= counter; i++) {
+                            // Permite cancelamento pelo usuário.
+                            if (status.get().equals(Status.CANCELED)) {
+                                return Boolean.FALSE;
+                            }
+
+                            // Regra de negócio aplicável aqui.
+                            progress = (double) i / counter;
+                            // Valor passado para o indicador deve estar na faixa de 0 até 1.
+                            processing.setProgress(progress);
+                            // Sleep apenas para exemplo:
+                            Thread.sleep(50);
+
+                            // Sinalização para outros processos.
+                            Thread.yield();
+                        }
+                        return Boolean.TRUE;
+                    }
+                };
+            }
+        };
+
+        // Altera o cursor do mouse ao iniciar o processo em segundo plano.
+        service.setOnRunning(r -> {
+            scene.setCursor(Cursor.WAIT);
+            status.set(Status.EXECUTING);
+        });
+
+        // Apresenta uma mensagem em caso de falhas.
+        service.setOnFailed(f -> {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(((Button) event.getSource()).getText());
+            alert.setContentText(service.getException().getLocalizedMessage());
+            alert.showAndWait();
+            service.cancel();
+            scene.setCursor(Cursor.DEFAULT);
+            status.set(Status.IDLE);
+        });   
+
+        // Restaura o estado de espera por uma ação do usuário.
+        service.setOnSucceeded(s -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Executar");
+            alert.setHeaderText("Concluído com sucesso!");
+            alert.setContentText("Obrigado por apreciar nosso trabalho!");
+            alert.showAndWait();
+            scene.setCursor(Cursor.DEFAULT);
+            status.set(Status.FINISHED);
+        });        
+
+        service.start();
     }
 
     /**
@@ -372,8 +437,8 @@ public class Wizard implements Runnable {
         try {
             monitor.join();
         } catch (InterruptedException e) {
-            // Já está encerrando... não precisa tratar a exceção...
             e.printStackTrace();
+            monitor.interrupt();
         }
     }
 
