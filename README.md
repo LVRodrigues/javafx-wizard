@@ -34,7 +34,7 @@ A área destacada na imagem é onde as páginas de navegação serão apresentad
 Para gerar os instaladores, deve-se fazê-lo na plataforma alvo. Por exemplo, executando no Linux, gerará um instalador padrão Debian.
 
 ```bash
-mvn clean favafx:jlink jpackage:jpackage
+mvn clean javafx:jlink jpackage:jpackage
 ```
 
 No diretório ./target/dist estará um instalador do aplicativo.

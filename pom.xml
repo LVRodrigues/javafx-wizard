@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.com.spiderbot.wizard</groupId>
-    <artifactId>javafx-wizard</artifactId>
+    <artifactId>openjfx-wizard</artifactId>
     <version>1.0.0</version>
-    <name>javafrx-wizard</name>
-    <description>Exemplo de aplicativo Wizard desenvolvido com Java FX.</description>
+    <name>openjfx-wizard</name>
+    <description>Exemplo de aplicativo Wizard desenvolvido com Open JFX.</description>
 
     <properties>
         <main.class>br.com.spiderbot.wizard/br.com.spiderbot.wizard.App</main.class>
