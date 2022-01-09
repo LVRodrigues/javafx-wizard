@@ -3,6 +3,7 @@ package br.com.spiderbot.wizard;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.spiderbot.wizard.pages.Introduction;
 import br.com.spiderbot.wizard.pages.Page;
@@ -24,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -384,6 +386,18 @@ public class Wizard implements Runnable {
      */
     @FXML
     public void cancelAction(ActionEvent event) {
+        if (status.get().equals(Status.EXECUTING)) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Cancelar");
+            alert.setHeaderText("Processo em execução!");
+            alert.setContentText("Deseja realmente cancelar a operação?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() != ButtonType.OK) {
+                return;  
+            } else {
+                status.set(Status.CANCELED);
+            }
+        }
         shutdown();
         Platform.exit();
     }
