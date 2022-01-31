@@ -7,10 +7,9 @@ package br.com.spiderbot.wizard.pages;
 * <p>
 * Deve ser a primeira página carregada.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 31/12/2021
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public class Introduction extends Page {
 

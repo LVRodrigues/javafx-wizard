@@ -26,10 +26,9 @@ import javafx.scene.control.Alert.AlertType;
 /**
 * Controller Java FX para apresentar uma página do Wizard.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 31/12/2021
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public abstract class Page {
 

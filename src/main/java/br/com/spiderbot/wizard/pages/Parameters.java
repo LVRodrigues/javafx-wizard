@@ -9,10 +9,9 @@ import javafx.scene.control.TextField;
 /**
 * Coleta de parâmetros.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 01/01/2022
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public class Parameters extends Page {
 

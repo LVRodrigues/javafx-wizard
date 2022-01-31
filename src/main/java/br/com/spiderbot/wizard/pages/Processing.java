@@ -10,10 +10,9 @@ import javafx.scene.control.ProgressIndicator;
 /**
 * Página de relatório de processamento da atividade principal do Wizard.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 08/01/2022
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public class Processing extends Page {
 

@@ -37,10 +37,9 @@ import javafx.scene.shape.Circle;
 * <p>
 * Controla a navegação entre as páginas do aplicativo.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 31/12/2021
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public class Wizard implements Runnable {
 

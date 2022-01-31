@@ -2,6 +2,10 @@ package br.com.spiderbot.wizard;
 
 /**
  * Estado de operação do Wizard.
+ * 
+ * @author $Author$
+ * @author $Committer$
+ * $Branch$
  */
 public enum Status {
     

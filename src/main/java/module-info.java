@@ -1,3 +1,10 @@
+/**
+ * Configuração de dependências do aplicativo.
+ * 
+ * @author $Author$
+ * @author $Committer$
+ * $Branch$
+ */
 module br.com.spiderbot.wizard {
     requires transitive javafx.graphics;
     requires javafx.controls;

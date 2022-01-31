@@ -3,10 +3,9 @@ package br.com.spiderbot.wizard;
 /**
 * Constantes compartilhadas entre as páginas para troca de parâmetros.
 *
-* @author <a href="mailto:lvrodrigues@spiderbot.com.br">Luciano Vieira Rodrigues</a>
-* @since 08/01/2022
-* @author $$Author$$
-* @version $$Revision$$ - $$Date$$
+* @author $Author$
+* @author $Committer$
+* $Branch$
 */
 public final class Constants {
 

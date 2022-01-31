@@ -19,7 +19,7 @@ Em **br.com.spiderbot.wizard.Wizard**, o método **initialize** pode ser utiliza
 
 ## O Wizard
 
-![Wizard](./images/wizard.png "Formulári principal do aplicativo Wizard.")
+![Wizard](./images/wizard.png "Formulário principal do aplicativo Wizard.")
 
 O título ([Title]) será atualizado em cada navegação com informações da página corrente.
 
@@ -38,3 +38,8 @@ mvn clean javafx:jlink jpackage:jpackage
 ```
 
 No diretório ./target/dist estará um instalador do aplicativo.
+
+
+## Javadoc
+
+Os cabeçalhos das classes foram comentados para usar a macro substiuição durante os processos de de checkout e checkin no repositório GIT, Se desejar que sejam expandidos, siga antes as orientações do projeto **[git-keywords](https://github.com/LVRodrigues/git-keywords.git)**.
