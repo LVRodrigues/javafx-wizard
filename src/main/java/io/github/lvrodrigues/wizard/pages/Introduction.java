@@ -1,4 +1,4 @@
-package br.com.spiderbot.wizard.pages;
+package io.github.lvrodrigues.wizard.pages;
 
 /**
 * Página de introdução do aplicativo. 

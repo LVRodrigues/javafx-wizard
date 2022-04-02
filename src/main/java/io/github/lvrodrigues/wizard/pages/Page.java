@@ -1,4 +1,4 @@
-package br.com.spiderbot.wizard.pages;
+package io.github.lvrodrigues.wizard.pages;
 
 import java.io.File;
 import java.io.FileInputStream;

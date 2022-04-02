@@ -5,4 +5,4 @@
 * @author $Committer$
 * $Branch$
 */
-package br.com.spiderbot.wizard.pages;
+package io.github.lvrodrigues.wizard.pages;

@@ -1,6 +1,6 @@
-package br.com.spiderbot.wizard.pages;
+package io.github.lvrodrigues.wizard.pages;
 
-import br.com.spiderbot.wizard.Constants;
+import io.github.lvrodrigues.wizard.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;

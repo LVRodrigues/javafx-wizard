@@ -1,14 +1,14 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.spiderbot.wizard.pages.Introduction;
-import br.com.spiderbot.wizard.pages.Page;
-import br.com.spiderbot.wizard.pages.Parameters;
-import br.com.spiderbot.wizard.pages.Processing;
+import io.github.lvrodrigues.wizard.pages.Introduction;
+import io.github.lvrodrigues.wizard.pages.Page;
+import io.github.lvrodrigues.wizard.pages.Parameters;
+import io.github.lvrodrigues.wizard.pages.Processing;
 import javafx.application.Platform;
 import javafx.beans.binding.When;
 import javafx.beans.property.IntegerProperty;

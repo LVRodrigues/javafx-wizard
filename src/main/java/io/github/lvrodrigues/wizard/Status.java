@@ -1,4 +1,4 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 /**
  * Estado de operação do Wizard.

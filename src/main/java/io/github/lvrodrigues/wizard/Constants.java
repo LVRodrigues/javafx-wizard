@@ -1,4 +1,4 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 /**
 * Constantes compartilhadas entre as páginas para troca de parâmetros.
