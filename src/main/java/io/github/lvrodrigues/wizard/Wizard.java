@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import io.github.lvrodrigues.wizard.pages.Introduction;
-import io.github.lvrodrigues.wizard.pages.Page;
+import io.github.lvrodrigues.wizard.pages.PageAbstract;
 import io.github.lvrodrigues.wizard.pages.Parameters;
 import io.github.lvrodrigues.wizard.pages.Processing;
 import javafx.application.Platform;
@@ -34,12 +34,12 @@ import javafx.scene.shape.Circle;
 
 /**
 * Classe de Gerenciamento do Wizard.
-* <p>
-* Controla a navegação entre as páginas do aplicativo.
+* 
+* <p>Controla a navegação entre as páginas do aplicativo.
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
 public class Wizard implements Runnable {
 
@@ -114,7 +114,7 @@ public class Wizard implements Runnable {
     /**
      * Controlador da página corrente.
      */
-    private Page page;
+    private PageAbstract page;
 
     /**
      * Estado de operação do Wizard.
@@ -379,8 +379,9 @@ public class Wizard implements Runnable {
 
     /**
      * Cancela a execução de processos do Wizard.
-     * <p>
-     * Também finaliza o aplicativo.
+     *
+     * <p>Também finaliza o aplicativo.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML

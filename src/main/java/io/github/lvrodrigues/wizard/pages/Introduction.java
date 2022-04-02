@@ -2,16 +2,16 @@ package io.github.lvrodrigues.wizard.pages;
 
 /**
 * Página de introdução do aplicativo. 
-* <p> 
-* Apresentará informações iniciais, crédito de desenvolvimento e orientações de uso.
-* <p>
-* Deve ser a primeira página carregada.
+*
+* <p>Apresentará informações iniciais, crédito de desenvolvimento e orientações de uso.
+*
+* <p>Deve ser a primeira página carregada.
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
-public class Introduction extends Page {
+public class Introduction extends PageAbstract {
 
     @Override
     public String getTitle() {

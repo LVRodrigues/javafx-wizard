@@ -14,12 +14,13 @@ import javafx.stage.Stage;
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
 public class App extends Application {
 
     /**
      * Método de inicialização da camada Java FX.
+     *
      * @param Stage Container principal da camada Java FX.
      */
     @Override
@@ -53,6 +54,7 @@ public class App extends Application {
 
     /**
      * Inicialização do aplicativo Java.
+     *
      * @param args Lista de argumentos recebidos pela linha de comando.
      */
     public static void main(String[] args) {

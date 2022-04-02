@@ -43,7 +43,7 @@ public enum Status {
      * Construtor oculto.
      * @param description Descrição do estado.
      */
-    private Status(String description) {
+    Status(String description) {
         this.description = description;
     }
 

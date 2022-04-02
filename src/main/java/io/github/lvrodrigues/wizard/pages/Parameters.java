@@ -11,9 +11,9 @@ import javafx.scene.control.TextField;
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
-public class Parameters extends Page {
+public class Parameters extends PageAbstract {
 
     /**
      * Valor padrão para o parâmetro <b>name</b> quando este ainda não
@@ -24,8 +24,8 @@ public class Parameters extends Page {
     /**
      * Valor padrão para o parâmetro <b>counter</b> quando este ainda
      * não estiver atribuído.
-     * <p>
-     * Será também o valor mínimo para o componente.
+     *
+     * <p>Será também o valor mínimo para o componente.
      */
     private static final Integer PARAM_COUNTER_DEFAULT = Integer.valueOf("1000");
 
@@ -57,7 +57,9 @@ public class Parameters extends Page {
     public void onShow() {
         super.onShow();
         fieldName.setText(datas().getOrDefault(Constants.PARAM_NAME, PARAM_NAME_DEFAULT));
-        fieldCounter.getValueFactory().setValue(Integer.valueOf(datas().getOrDefault(Constants.PARAM_COUNTER, PARAM_COUNTER_DEFAULT.toString())));
+        fieldCounter.getValueFactory().setValue(
+            Integer.valueOf(datas().getOrDefault(
+                Constants.PARAM_COUNTER, PARAM_COUNTER_DEFAULT.toString())));
     }
 
     @Override
@@ -70,6 +72,8 @@ public class Parameters extends Page {
      */
     @FXML
     public void initialize() {
-        fieldCounter.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(PARAM_COUNTER_DEFAULT, Integer.MAX_VALUE));
+        fieldCounter.setValueFactory(
+            new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                PARAM_COUNTER_DEFAULT, Integer.MAX_VALUE));
     }
 }
