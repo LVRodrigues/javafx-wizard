@@ -14,7 +14,7 @@ import javafx.scene.control.ProgressIndicator;
 * @author $Committer$
 * @branch $Branch$
 */
-public class Processing extends PageAbstract {
+public class Processing extends AbstractPage {
 
     /**
      * Apresenta o nome configurado nos parâmetros.

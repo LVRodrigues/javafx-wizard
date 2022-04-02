@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import io.github.lvrodrigues.wizard.pages.Introduction;
-import io.github.lvrodrigues.wizard.pages.PageAbstract;
+import io.github.lvrodrigues.wizard.pages.AbstractPage;
 import io.github.lvrodrigues.wizard.pages.Parameters;
 import io.github.lvrodrigues.wizard.pages.Processing;
 import javafx.application.Platform;
@@ -114,7 +114,7 @@ public class Wizard implements Runnable {
     /**
      * Controlador da página corrente.
      */
-    private PageAbstract page;
+    private AbstractPage page;
 
     /**
      * Estado de operação do Wizard.

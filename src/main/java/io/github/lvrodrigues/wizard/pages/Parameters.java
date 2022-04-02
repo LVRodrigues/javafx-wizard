@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 * @author $Committer$
 * @branch $Branch$
 */
-public class Parameters extends PageAbstract {
+public class Parameters extends AbstractPage {
 
     /**
      * Valor padrão para o parâmetro <b>name</b> quando este ainda não

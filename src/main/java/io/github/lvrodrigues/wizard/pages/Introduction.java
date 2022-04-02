@@ -11,7 +11,7 @@ package io.github.lvrodrigues.wizard.pages;
 * @author $Committer$
 * @branch $Branch$
 */
-public class Introduction extends PageAbstract {
+public class Introduction extends AbstractPage {
 
     @Override
     public String getTitle() {
