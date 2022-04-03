@@ -16,7 +16,7 @@
     <properties>
         <scm.url>scm:git:https://github.com/LVRodrigues/openjfx-wizard.git</scm.url>
         <main.class>io.github.lvrodrigues.wizard/io.github.lvrodrigues.wizard.App</main.class>
-        <javafx.version>18-ea+8</javafx.version>
+        <javafx.version>18</javafx.version>
         <fontawesomefx.version>9.1.2</fontawesomefx.version>
         <fontawesome.version>4.7.0</fontawesome.version>
         <octicons.version>4.3.0</octicons.version>

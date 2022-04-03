@@ -54,9 +54,19 @@ public class Wizard implements Runnable {
     private static final double INDICATOR_OTHERS = 0.2;
 
     /**
+     * Raio para criação do indicador de página corrente (5 pixels).
+     */
+    private static final double INDICATOR_RADIUS = 5.0;
+
+    /**
      * Pausa para simular um tempo de processamento.
      */
     private static final int PROGRESS_INTERVAL = 50;
+
+    /**
+     * Título da mensagem de notificação de erros.
+     */
+    private static final String ALERT_TITLE = "Erro";
  
     /**
      * Botão para executar a navegação para página anterior.
@@ -139,8 +149,8 @@ public class Wizard implements Runnable {
 
     /**
      * Inicialização da camada Java FX.
-     * <p>
-     * Utilize este método para carregar a lista de páginas do Wizard.
+     *
+     * <p>Utilize este método para carregar a lista de páginas do Wizard.
      */
     @FXML
     public void initialize() {
@@ -178,7 +188,7 @@ public class Wizard implements Runnable {
             monitor.start();
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText("Erro ao carregar as páginas do aplicativo.");
             alert.setContentText(e.getLocalizedMessage());
             alert.showAndWait();
@@ -188,18 +198,18 @@ public class Wizard implements Runnable {
 
     /**
      * Coloca a página de navegação na fila de apresentação.
-     * <p>
-     * Para cada pagína, é criado também um ícone de representação para
-     * indicar o ponto de navegação do aplicativo.
      * 
-     * @param page Página do Wizard.
+     * <p>Para cada pagína, é criado também um ícone de representação para
+     * indicar o ponto de navegação do aplicativo.
+     *
+     * @param loader Página do Wizard.
      */
-    private void addPage(FXMLLoader page) {
+    private void addPage(FXMLLoader loader) {
         int index = pages.size();
         // Armazena a página para exibição.
-        pages.add(index, page);
+        pages.add(index, loader);
         // Adiciona um indicador de página sempre como primeiro componente.
-        Circle circle = new Circle(5);
+        Circle circle = new Circle(INDICATOR_RADIUS);
         circle.setFill(Color.BLACK);
         circle.opacityProperty().bind(
             new When(current.isEqualTo(index))
@@ -232,6 +242,7 @@ public class Wizard implements Runnable {
 
     /**
      * Evento de navegação para a página anterior.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -291,7 +302,7 @@ public class Wizard implements Runnable {
         // Apresenta uma mensagem em caso de falhas.
         service.setOnFailed(f -> {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText(((Button) event.getSource()).getText());
             alert.setContentText(service.getException().getLocalizedMessage());
             alert.showAndWait();
@@ -336,7 +347,7 @@ public class Wizard implements Runnable {
                             if (status.get().equals(Status.CANCELED)) {
                                 return Boolean.FALSE;
                             }
-                            
+
                             // Regra de negócio aplicável aqui.
                             progress = (double) i / counter;
                             // Valor passado para o indicador deve estar na faixa de 0 até 1.
@@ -362,7 +373,7 @@ public class Wizard implements Runnable {
         // Apresenta uma mensagem em caso de falhas.
         service.setOnFailed(f -> {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText(((Button) event.getSource()).getText());
             alert.setContentText(service.getException().getLocalizedMessage());
             alert.showAndWait();

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 * @author $Committer$
 * @branch $Branch$
 */
-public class App extends Application {
+public class Main extends Application {
 
     /**
      * Método de inicialização da camada Java FX.

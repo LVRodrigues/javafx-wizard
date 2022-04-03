@@ -2,10 +2,10 @@ package io.github.lvrodrigues.wizard;
 
 /**
  * Estado de operação do Wizard.
- * 
+ *
  * @author $Author$
  * @author $Committer$
- * $Branch$
+ * @branch $Branch$
  */
 public enum Status {
     
@@ -41,6 +41,7 @@ public enum Status {
 
     /**
      * Construtor oculto.
+     *
      * @param description Descrição do estado.
      */
     Status(String description) {
