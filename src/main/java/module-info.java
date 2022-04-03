@@ -5,7 +5,7 @@
  * @author $Committer$
  * $Branch$
  */
-module br.com.spiderbot.wizard {
+module io.github.lvrodrigues.wizard {
     requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
@@ -13,7 +13,8 @@ module br.com.spiderbot.wizard {
     requires de.jensd.fx.glyphs.commons;
     requires de.jensd.fx.glyphs.controls;    
     requires de.jensd.fx.glyphs.fontawesome;
-    opens br.com.spiderbot.wizard to javafx.fxml;
-    opens br.com.spiderbot.wizard.pages to javafx.fxml;
-    exports br.com.spiderbot.wizard;
+    requires com.github.spotbugs.annotations;
+    opens io.github.lvrodrigues.wizard to javafx.fxml;
+    opens io.github.lvrodrigues.wizard.pages to javafx.fxml;
+    exports io.github.lvrodrigues.wizard;
 }

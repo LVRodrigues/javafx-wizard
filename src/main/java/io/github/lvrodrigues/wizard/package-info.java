@@ -3,6 +3,6 @@
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;

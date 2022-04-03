@@ -1,19 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>br.com.spiderbot.wizard</groupId>
+    <parent>
+        <groupId>io.github.lvrodrigues</groupId>
+        <artifactId>bom</artifactId>
+        <version>17.0.2</version>
+    </parent>
+
+    <groupId>io.github.lvrodrigues</groupId>
     <artifactId>openjfx-wizard</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>openjfx-wizard</name>
     <description>Exemplo de aplicativo Wizard desenvolvido com Open JFX.</description>
 
     <properties>
-        <main.class>br.com.spiderbot.wizard/br.com.spiderbot.wizard.App</main.class>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <java.release>17</java.release>
-        <javafx.version>18-ea+8</javafx.version>
+        <scm.url>scm:git:https://github.com/LVRodrigues/openjfx-wizard.git</scm.url>
+        <main.class>io.github.lvrodrigues.wizard/io.github.lvrodrigues.wizard.Main</main.class>
+        <javafx.version>18</javafx.version>
         <fontawesomefx.version>9.1.2</fontawesomefx.version>
         <fontawesome.version>4.7.0</fontawesome.version>
         <octicons.version>4.3.0</octicons.version>
@@ -66,18 +69,18 @@
             <artifactId>fontawesomefx-icons525</artifactId>
             <version>${icons525.version}-${fontawesomefx.version}</version>
         </dependency>
+        
+        <!-- 
+            Usando anotações do SpotBugs para gerenciamento dos reslatórios. 
+        -->
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+          </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <release>${java.release}</release>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -102,7 +105,6 @@
                     <module>${main.class}</module>
                     <runtimeImage>target/image</runtimeImage>
                     <linuxShortcut>true</linuxShortcut>
-                    <!-- <icon>${project.basedir}/duke.png</icon> -->
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
