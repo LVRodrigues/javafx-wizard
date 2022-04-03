@@ -21,7 +21,7 @@ public class App extends Application {
     /**
      * Método de inicialização da camada Java FX.
      *
-     * @param Stage Container principal da camada Java FX.
+     * @param stage Container principal da camada Java FX.
      */
     @Override
     public void start(Stage stage) throws IOException {

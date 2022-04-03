@@ -52,6 +52,11 @@ public class Wizard implements Runnable {
      * Porcentagem de visibilidade do indicador das outras páginas (20%).
      */
     private static final double INDICATOR_OTHERS = 0.2;
+
+    /**
+     * Pausa para simular um tempo de processamento.
+     */
+    private static final int PROGRESS_INTERVAL = 50;
  
     /**
      * Botão para executar a navegação para página anterior.
@@ -237,6 +242,7 @@ public class Wizard implements Runnable {
 
     /**
      * Evento de navegação para a próxima página.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -247,6 +253,7 @@ public class Wizard implements Runnable {
 
     /**
      * Executa a navegação para uma nova página.
+     *
      * @param event Evento de origem da navegação.
      * @param navigate Índice da próxima página.
      */
@@ -306,6 +313,7 @@ public class Wizard implements Runnable {
 
     /**
      * Evento de execução do processo específico do Wizard.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -328,13 +336,13 @@ public class Wizard implements Runnable {
                             if (status.get().equals(Status.CANCELED)) {
                                 return Boolean.FALSE;
                             }
-
+                            
                             // Regra de negócio aplicável aqui.
                             progress = (double) i / counter;
                             // Valor passado para o indicador deve estar na faixa de 0 até 1.
                             processing.setProgress(progress);
                             // Sleep apenas para exemplo:
-                            Thread.sleep(50);
+                            Thread.sleep(PROGRESS_INTERVAL);
 
                             // Sinalização para outros processos.
                             Thread.yield();
@@ -404,8 +412,8 @@ public class Wizard implements Runnable {
 
     /**
      * Processo paralelo, executado em segundo plano.
-     * <p>
-     * Controlará os estados dos botões de navegação e operação do aplicativo.
+     *
+     * <p>Controlará os estados dos botões de navegação e operação do aplicativo.
      */
     @Override
     public void run() {
@@ -459,6 +467,7 @@ public class Wizard implements Runnable {
     /**
      * Expõe o estado de operação do aplicativo para o controle
      * de fechamento.
+     *
      * @return Status
      */
     public Status getStatus() {

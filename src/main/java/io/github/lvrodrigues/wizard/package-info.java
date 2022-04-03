@@ -3,6 +3,6 @@
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
 package io.github.lvrodrigues.wizard;

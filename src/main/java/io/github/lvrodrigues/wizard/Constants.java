@@ -5,7 +5,7 @@ package io.github.lvrodrigues.wizard;
 *
 * @author $Author$
 * @author $Committer$
-* $Branch$
+* @branch $Branch$
 */
 public final class Constants {
 
