@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <edit>${project.scm.url}</edit>
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.10.0</version>
+    </skin>
+
+    <bannerLeft>
+        <name>${project.artifactId}</name>
+    </bannerLeft>
+
+    <bannerRight>
+        <name/>
+    </bannerRight>
+
+    <publishDate position="left" format="yyyy-MM-dd HH:mm"/>
+    <version position="right"/>
+
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>true</topBarEnabled>
+            <navBarStyle>navbar-inverse</navBarStyle>
+            <sideBarEnabled>false</sideBarEnabled>
+            <profile>production</profile>
+
+            <gitHub>
+                <projectId>lvrodrigues/repository</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>black</ribbonColor>
+            </gitHub>
+            
+            <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+            <copyrightClass>pull-right</copyrightClass>
+        </fluidoSkin>
+    </custom>
+
+    <body>
+        <menu name="Parent">
+            <item name="bom-17.0.2" href="https://lvrodrigues.github.io/repository/bom-17.0.2"/>
+        </menu>
+        <menu ref="modules"/>
+        <menu ref="reports"/>
+    </body>
+</project>
