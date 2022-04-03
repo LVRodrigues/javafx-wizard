@@ -32,8 +32,8 @@ import javafx.scene.control.Alert.AlertType;
 /**
 * Controller Java FX para apresentar uma página do Wizard.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public abstract class AbstractPage {

@@ -10,8 +10,8 @@ import javafx.scene.control.ProgressIndicator;
 /**
 * Página de relatório de processamento da atividade principal do Wizard.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public class Processing extends AbstractPage {

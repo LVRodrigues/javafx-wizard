@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 /**
 * Inicialização do aplicativo.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public class Main extends Application {

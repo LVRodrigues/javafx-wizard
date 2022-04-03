@@ -38,8 +38,8 @@ import javafx.scene.shape.Circle;
 * 
 * <p>Controla a navegação entre as páginas do aplicativo.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 @SuppressWarnings({"ClassFanOutComplexity", "ClassDataAbstractionCoupling"})

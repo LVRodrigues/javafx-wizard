@@ -3,8 +3,8 @@ package io.github.lvrodrigues.wizard;
 /**
  * Estado de operação do Wizard.
  *
- * @author $Author$
- * @author $Committer$
+ * @author $AuthorName$
+ * @author $CommitterName$
  * @branch $Branch$
  */
 public enum Status {

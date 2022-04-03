@@ -7,8 +7,8 @@ package io.github.lvrodrigues.wizard.pages;
 *
 * <p>Deve ser a primeira página carregada.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public class Introduction extends AbstractPage {

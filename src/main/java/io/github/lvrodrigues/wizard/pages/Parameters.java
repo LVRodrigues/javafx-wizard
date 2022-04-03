@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 /**
 * Coleta de parâmetros.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public class Parameters extends AbstractPage {
