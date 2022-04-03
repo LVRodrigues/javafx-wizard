@@ -2,6 +2,7 @@ package io.github.lvrodrigues.wizard.pages;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -121,12 +123,10 @@ public abstract class AbstractPage {
      * XML.
      */
     public void onShow() {
-        File file = getFile();
-        if (!file.exists()) {
-            return;
-        }
         DATAS.clear();
         try {
+            File file = getFile();
+
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             try (InputStream stream = new FileInputStream(file)) {
@@ -156,6 +156,7 @@ public abstract class AbstractPage {
      *
      * @return Conjunto de informações no padrão chave e valor.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Map<String, String> datas() {
         return DATAS;
     }
@@ -164,12 +165,13 @@ public abstract class AbstractPage {
      * Recupera o arquivo de persistência de informações.
      *
      * @return Arquivo XML de persistência de informações.
+     * @throws FileNotFoundException Diretório de persistência de dados não encontrado.
      */
-    private File getFile() {
+    private File getFile() throws FileNotFoundException {
         String home = System.getProperty("user.home");
         Path path   = Path.of(home, ".spiderbot");
-        if (!path.toFile().exists()) {
-            path.toFile().mkdirs();
+        if (!path.toFile().exists() && !path.toFile().mkdirs()) {
+            throw new FileNotFoundException("Erro ao criar o diretório para persistência de dados.");
         }
         return new File(path.toFile(), "javafx-wizard.xml");
     }
