@@ -15,7 +15,7 @@
 
     <properties>
         <scm.url>scm:git:https://github.com/LVRodrigues/openjfx-wizard.git</scm.url>
-        <main.class>io.github.lvrodrigues.wizard/io.github.lvrodrigues.wizard.App</main.class>
+        <main.class>io.github.lvrodrigues.wizard/io.github.lvrodrigues.wizard.Main</main.class>
         <javafx.version>18</javafx.version>
         <fontawesomefx.version>9.1.2</fontawesomefx.version>
         <fontawesome.version>4.7.0</fontawesome.version>
@@ -69,6 +69,14 @@
             <artifactId>fontawesomefx-icons525</artifactId>
             <version>${icons525.version}-${fontawesomefx.version}</version>
         </dependency>
+        
+        <!-- 
+            Usando anotações do SpotBugs para gerenciamento dos reslatórios. 
+        -->
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+          </dependency>
     </dependencies>
 
     <build>

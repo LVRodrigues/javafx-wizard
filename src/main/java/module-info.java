@@ -13,6 +13,7 @@ module io.github.lvrodrigues.wizard {
     requires de.jensd.fx.glyphs.commons;
     requires de.jensd.fx.glyphs.controls;    
     requires de.jensd.fx.glyphs.fontawesome;
+    requires com.github.spotbugs.annotations;
     opens io.github.lvrodrigues.wizard to javafx.fxml;
     opens io.github.lvrodrigues.wizard.pages to javafx.fxml;
     exports io.github.lvrodrigues.wizard;

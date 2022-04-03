@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.github.lvrodrigues.wizard.pages.Introduction;
 import io.github.lvrodrigues.wizard.pages.AbstractPage;
 import io.github.lvrodrigues.wizard.pages.Parameters;
@@ -41,6 +42,7 @@ import javafx.scene.shape.Circle;
 * @author $Committer$
 * @branch $Branch$
 */
+@SuppressWarnings({"ClassFanOutComplexity", "ClassDataAbstractionCoupling"})
 public class Wizard implements Runnable {
 
     /**
@@ -153,6 +155,7 @@ public class Wizard implements Runnable {
      * <p>Utilize este método para carregar a lista de páginas do Wizard.
      */
     @FXML
+    @SuppressFBWarnings("DM_EXIT")
     public void initialize() {
         pages = new ArrayList<>();
 
@@ -276,18 +279,7 @@ public class Wizard implements Runnable {
                 return new Task<Boolean>() {
                     @Override
                     protected Boolean call() throws Exception {
-                        // Se é permitido navegar...
-                        if (page != null) {
-                            // Salva as configurações
-                            page.onHide();
-                            // Avança para a próxima página:
-                            current.set(navigate);
-                            // Carrega o novo controlador:
-                            page = pages.get(current.get()).getController();
-                            // Carregar os parâmetros:
-                            page.onShow();
-                        }
-                        return Boolean.TRUE;
+                        return navigateToCall(navigate);
                     }
                 };
             }
@@ -323,6 +315,28 @@ public class Wizard implements Runnable {
     }
 
     /**
+     * Executa a navegação entre as páginas.
+     *
+     * @param navigate Índice da próxima página.
+     *
+     * @return Boolean com o resultado da navegação.
+     */
+    private Boolean navigateToCall(final int navigate) {
+        // Se é permitido navegar...
+        if (page != null) {
+            // Salva as configurações
+            page.onHide();
+            // Avança para a próxima página:
+            current.set(navigate);
+            // Carrega o novo controlador:
+            page = pages.get(current.get()).getController();
+            // Carregar os parâmetros:
+            page.onShow();
+        }
+        return Boolean.TRUE;
+    }    
+
+    /**
      * Evento de execução do processo específico do Wizard.
      *
      * @param event Informações da origem do evento.
@@ -340,25 +354,7 @@ public class Wizard implements Runnable {
                 return new Task<Boolean>() {
                     @Override
                     protected Boolean call() throws Exception {
-                        int counter     = Integer.parseInt(processing.datas().get(Constants.PARAM_COUNTER));
-                        double progress = 0;
-                        for (int i = 1; i <= counter; i++) {
-                            // Permite cancelamento pelo usuário.
-                            if (status.get().equals(Status.CANCELED)) {
-                                return Boolean.FALSE;
-                            }
-
-                            // Regra de negócio aplicável aqui.
-                            progress = (double) i / counter;
-                            // Valor passado para o indicador deve estar na faixa de 0 até 1.
-                            processing.setProgress(progress);
-                            // Sleep apenas para exemplo:
-                            Thread.sleep(PROGRESS_INTERVAL);
-
-                            // Sinalização para outros processos.
-                            Thread.yield();
-                        }
-                        return Boolean.TRUE;
+                        return executeActionCall(processing);
                     }
                 };
             }
@@ -395,6 +391,36 @@ public class Wizard implements Runnable {
 
         service.start();
     }
+
+    /**
+     * Execução da regra de negócio, realizando uma iteração pequena dentro de um
+     * laço.
+     *
+     * @param processing Página final com relatório de processamento.
+     * @return Boolean, com resultado final da operação.
+     * @throws InterruptedException Processo interrompido.
+     */
+    private Boolean executeActionCall(Processing processing) throws InterruptedException {
+        int counter     = Integer.parseInt(processing.datas().get(Constants.PARAM_COUNTER));
+        double progress = 0;
+        for (int i = 1; i <= counter; i++) {
+            // Permite cancelamento pelo usuário.
+            if (status.get().equals(Status.CANCELED)) {
+                return Boolean.FALSE;
+            }
+
+            // Regra de negócio aplicável aqui.
+            progress = (double) i / counter;
+            // Valor passado para o indicador deve estar na faixa de 0 até 1.
+            processing.setProgress(progress);
+            // Sleep apenas para exemplo:
+            Thread.sleep(PROGRESS_INTERVAL);
+
+            // Sinalização para outros processos.
+            Thread.yield();
+        }
+        return Boolean.TRUE;
+    }    
 
     /**
      * Cancela a execução de processos do Wizard.
