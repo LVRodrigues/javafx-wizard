@@ -1,14 +1,15 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.spiderbot.wizard.pages.Introduction;
-import br.com.spiderbot.wizard.pages.Page;
-import br.com.spiderbot.wizard.pages.Parameters;
-import br.com.spiderbot.wizard.pages.Processing;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.github.lvrodrigues.wizard.pages.Introduction;
+import io.github.lvrodrigues.wizard.pages.AbstractPage;
+import io.github.lvrodrigues.wizard.pages.Parameters;
+import io.github.lvrodrigues.wizard.pages.Processing;
 import javafx.application.Platform;
 import javafx.beans.binding.When;
 import javafx.beans.property.IntegerProperty;
@@ -34,13 +35,14 @@ import javafx.scene.shape.Circle;
 
 /**
 * Classe de Gerenciamento do Wizard.
-* <p>
-* Controla a navegação entre as páginas do aplicativo.
+* 
+* <p>Controla a navegação entre as páginas do aplicativo.
 *
-* @author $Author$
-* @author $Committer$
-* $Branch$
+* @author $AuthorName$
+* @author $CommitterName$
+* @branch $Branch$
 */
+@SuppressWarnings({"ClassFanOutComplexity", "ClassDataAbstractionCoupling"})
 public class Wizard implements Runnable {
 
     /**
@@ -52,6 +54,21 @@ public class Wizard implements Runnable {
      * Porcentagem de visibilidade do indicador das outras páginas (20%).
      */
     private static final double INDICATOR_OTHERS = 0.2;
+
+    /**
+     * Raio para criação do indicador de página corrente (5 pixels).
+     */
+    private static final double INDICATOR_RADIUS = 5.0;
+
+    /**
+     * Pausa para simular um tempo de processamento.
+     */
+    private static final int PROGRESS_INTERVAL = 50;
+
+    /**
+     * Título da mensagem de notificação de erros.
+     */
+    private static final String ALERT_TITLE = "Erro";
  
     /**
      * Botão para executar a navegação para página anterior.
@@ -114,7 +131,7 @@ public class Wizard implements Runnable {
     /**
      * Controlador da página corrente.
      */
-    private Page page;
+    private AbstractPage page;
 
     /**
      * Estado de operação do Wizard.
@@ -134,10 +151,11 @@ public class Wizard implements Runnable {
 
     /**
      * Inicialização da camada Java FX.
-     * <p>
-     * Utilize este método para carregar a lista de páginas do Wizard.
+     *
+     * <p>Utilize este método para carregar a lista de páginas do Wizard.
      */
     @FXML
+    @SuppressFBWarnings("DM_EXIT")
     public void initialize() {
         pages = new ArrayList<>();
 
@@ -173,7 +191,7 @@ public class Wizard implements Runnable {
             monitor.start();
         } catch (IOException e) {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText("Erro ao carregar as páginas do aplicativo.");
             alert.setContentText(e.getLocalizedMessage());
             alert.showAndWait();
@@ -183,18 +201,18 @@ public class Wizard implements Runnable {
 
     /**
      * Coloca a página de navegação na fila de apresentação.
-     * <p>
-     * Para cada pagína, é criado também um ícone de representação para
-     * indicar o ponto de navegação do aplicativo.
      * 
-     * @param page Página do Wizard.
+     * <p>Para cada pagína, é criado também um ícone de representação para
+     * indicar o ponto de navegação do aplicativo.
+     *
+     * @param loader Página do Wizard.
      */
-    private void addPage(FXMLLoader page) {
+    private void addPage(FXMLLoader loader) {
         int index = pages.size();
         // Armazena a página para exibição.
-        pages.add(index, page);
+        pages.add(index, loader);
         // Adiciona um indicador de página sempre como primeiro componente.
-        Circle circle = new Circle(5);
+        Circle circle = new Circle(INDICATOR_RADIUS);
         circle.setFill(Color.BLACK);
         circle.opacityProperty().bind(
             new When(current.isEqualTo(index))
@@ -227,6 +245,7 @@ public class Wizard implements Runnable {
 
     /**
      * Evento de navegação para a página anterior.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -237,6 +256,7 @@ public class Wizard implements Runnable {
 
     /**
      * Evento de navegação para a próxima página.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -247,6 +267,7 @@ public class Wizard implements Runnable {
 
     /**
      * Executa a navegação para uma nova página.
+     *
      * @param event Evento de origem da navegação.
      * @param navigate Índice da próxima página.
      */
@@ -258,18 +279,7 @@ public class Wizard implements Runnable {
                 return new Task<Boolean>() {
                     @Override
                     protected Boolean call() throws Exception {
-                        // Se é permitido navegar...
-                        if (page != null) {
-                            // Salva as configurações
-                            page.onHide();
-                            // Avança para a próxima página:
-                            current.set(navigate);
-                            // Carrega o novo controlador:
-                            page = pages.get(current.get()).getController();
-                            // Carregar os parâmetros:
-                            page.onShow();
-                        }
-                        return Boolean.TRUE;
+                        return navigateToCall(navigate);
                     }
                 };
             }
@@ -284,7 +294,7 @@ public class Wizard implements Runnable {
         // Apresenta uma mensagem em caso de falhas.
         service.setOnFailed(f -> {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText(((Button) event.getSource()).getText());
             alert.setContentText(service.getException().getLocalizedMessage());
             alert.showAndWait();
@@ -305,7 +315,30 @@ public class Wizard implements Runnable {
     }
 
     /**
+     * Executa a navegação entre as páginas.
+     *
+     * @param navigate Índice da próxima página.
+     *
+     * @return Boolean com o resultado da navegação.
+     */
+    private Boolean navigateToCall(final int navigate) {
+        // Se é permitido navegar...
+        if (page != null) {
+            // Salva as configurações
+            page.onHide();
+            // Avança para a próxima página:
+            current.set(navigate);
+            // Carrega o novo controlador:
+            page = pages.get(current.get()).getController();
+            // Carregar os parâmetros:
+            page.onShow();
+        }
+        return Boolean.TRUE;
+    }    
+
+    /**
      * Evento de execução do processo específico do Wizard.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -321,25 +354,7 @@ public class Wizard implements Runnable {
                 return new Task<Boolean>() {
                     @Override
                     protected Boolean call() throws Exception {
-                        int counter     = Integer.parseInt(processing.datas().get(Constants.PARAM_COUNTER));
-                        double progress = 0;
-                        for (int i = 1; i <= counter; i++) {
-                            // Permite cancelamento pelo usuário.
-                            if (status.get().equals(Status.CANCELED)) {
-                                return Boolean.FALSE;
-                            }
-
-                            // Regra de negócio aplicável aqui.
-                            progress = (double) i / counter;
-                            // Valor passado para o indicador deve estar na faixa de 0 até 1.
-                            processing.setProgress(progress);
-                            // Sleep apenas para exemplo:
-                            Thread.sleep(50);
-
-                            // Sinalização para outros processos.
-                            Thread.yield();
-                        }
-                        return Boolean.TRUE;
+                        return executeActionCall(processing);
                     }
                 };
             }
@@ -354,7 +369,7 @@ public class Wizard implements Runnable {
         // Apresenta uma mensagem em caso de falhas.
         service.setOnFailed(f -> {
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Erro");
+            alert.setTitle(ALERT_TITLE);
             alert.setHeaderText(((Button) event.getSource()).getText());
             alert.setContentText(service.getException().getLocalizedMessage());
             alert.showAndWait();
@@ -378,9 +393,40 @@ public class Wizard implements Runnable {
     }
 
     /**
+     * Execução da regra de negócio, realizando uma iteração pequena dentro de um
+     * laço.
+     *
+     * @param processing Página final com relatório de processamento.
+     * @return Boolean, com resultado final da operação.
+     * @throws InterruptedException Processo interrompido.
+     */
+    private Boolean executeActionCall(Processing processing) throws InterruptedException {
+        int counter     = Integer.parseInt(processing.datas().get(Constants.PARAM_COUNTER));
+        double progress = 0;
+        for (int i = 1; i <= counter; i++) {
+            // Permite cancelamento pelo usuário.
+            if (status.get().equals(Status.CANCELED)) {
+                return Boolean.FALSE;
+            }
+
+            // Regra de negócio aplicável aqui.
+            progress = (double) i / counter;
+            // Valor passado para o indicador deve estar na faixa de 0 até 1.
+            processing.setProgress(progress);
+            // Sleep apenas para exemplo:
+            Thread.sleep(PROGRESS_INTERVAL);
+
+            // Sinalização para outros processos.
+            Thread.yield();
+        }
+        return Boolean.TRUE;
+    }    
+
+    /**
      * Cancela a execução de processos do Wizard.
-     * <p>
-     * Também finaliza o aplicativo.
+     *
+     * <p>Também finaliza o aplicativo.
+     *
      * @param event Informações da origem do evento.
      */
     @FXML
@@ -403,8 +449,8 @@ public class Wizard implements Runnable {
 
     /**
      * Processo paralelo, executado em segundo plano.
-     * <p>
-     * Controlará os estados dos botões de navegação e operação do aplicativo.
+     *
+     * <p>Controlará os estados dos botões de navegação e operação do aplicativo.
      */
     @Override
     public void run() {
@@ -458,6 +504,7 @@ public class Wizard implements Runnable {
     /**
      * Expõe o estado de operação do aplicativo para o controle
      * de fechamento.
+     *
      * @return Status
      */
     public Status getStatus() {

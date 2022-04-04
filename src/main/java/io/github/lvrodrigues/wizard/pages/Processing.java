@@ -1,6 +1,6 @@
-package br.com.spiderbot.wizard.pages;
+package io.github.lvrodrigues.wizard.pages;
 
-import br.com.spiderbot.wizard.Constants;
+import io.github.lvrodrigues.wizard.Constants;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
@@ -10,11 +10,11 @@ import javafx.scene.control.ProgressIndicator;
 /**
 * Página de relatório de processamento da atividade principal do Wizard.
 *
-* @author $Author$
-* @author $Committer$
-* $Branch$
+* @author $AuthorName$
+* @author $CommitterName$
+* @branch $Branch$
 */
-public class Processing extends Page {
+public class Processing extends AbstractPage {
 
     /**
      * Apresenta o nome configurado nos parâmetros.
@@ -44,6 +44,9 @@ public class Processing extends Page {
         return "Executar";
     }
 
+    /**
+     * Inicializar as propriedades.
+     */
     @FXML
     public void initialize() {
         progress = new SimpleDoubleProperty(0);
@@ -59,6 +62,7 @@ public class Processing extends Page {
 
     /**
      * Atualiza o progresso do processo em segundo plano.
+     *
      * @param value Valor percentual, na faixa de 0 até 1.
      */
     public void setProgress(double value) {

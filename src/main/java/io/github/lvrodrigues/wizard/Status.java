@@ -1,11 +1,11 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 /**
  * Estado de operação do Wizard.
- * 
- * @author $Author$
- * @author $Committer$
- * $Branch$
+ *
+ * @author $AuthorName$
+ * @author $CommitterName$
+ * @branch $Branch$
  */
 public enum Status {
     
@@ -41,9 +41,10 @@ public enum Status {
 
     /**
      * Construtor oculto.
+     *
      * @param description Descrição do estado.
      */
-    private Status(String description) {
+    Status(String description) {
         this.description = description;
     }
 

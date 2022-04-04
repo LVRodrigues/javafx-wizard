@@ -1,4 +1,4 @@
-package br.com.spiderbot.wizard;
+package io.github.lvrodrigues.wizard;
 
 import java.io.IOException;
 
@@ -12,15 +12,16 @@ import javafx.stage.Stage;
 /**
 * Inicialização do aplicativo.
 *
-* @author $Author$
-* @author $Committer$
-* $Branch$
+* @author $AuthorName$
+* @author $CommitterName$
+* @branch $Branch$
 */
-public class App extends Application {
+public class Main extends Application {
 
     /**
      * Método de inicialização da camada Java FX.
-     * @param Stage Container principal da camada Java FX.
+     *
+     * @param stage Container principal da camada Java FX.
      */
     @Override
     public void start(Stage stage) throws IOException {
@@ -53,6 +54,7 @@ public class App extends Application {
 
     /**
      * Inicialização do aplicativo Java.
+     *
      * @param args Lista de argumentos recebidos pela linha de comando.
      */
     public static void main(String[] args) {
