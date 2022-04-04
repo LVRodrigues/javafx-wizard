@@ -3,8 +3,8 @@ package io.github.lvrodrigues.wizard;
 /**
 * Constantes compartilhadas entre as páginas para troca de parâmetros.
 *
-* @author $Author$
-* @author $Committer$
+* @author $AuthorName$
+* @author $CommitterName$
 * @branch $Branch$
 */
 public final class Constants {
