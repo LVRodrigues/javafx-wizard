@@ -3,7 +3,7 @@
  * 
  * @author $Author$
  * @author $Committer$
- * $Branch$
+ * @branch $Branch$
  */
 module io.github.lvrodrigues.wizard {
     requires transitive javafx.graphics;
